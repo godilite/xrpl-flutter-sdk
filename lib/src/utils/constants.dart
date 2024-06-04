@@ -1,0 +1,4 @@
+enum XrPResponseStatus {
+  success,
+  error,
+}

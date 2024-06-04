@@ -1,0 +1,17 @@
+enum LedgerType {
+  account,
+  amendments,
+  amm,
+  check,
+  depositPreauth,
+  directory,
+  escrow,
+  fee,
+  hashes,
+  nftOffer,
+  offer,
+  paymentChannel,
+  signerList,
+  state,
+  ticket,
+}
