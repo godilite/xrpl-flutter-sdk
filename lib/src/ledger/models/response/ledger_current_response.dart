@@ -4,7 +4,7 @@ class LedgerCurrentResponse implements XrpResponse {
   /// id of the request that prompted this response (only for websocket requests)
   dynamic id;
 
-  LedgerResultResponse result;
+  LedgerCurrentResultResponse result;
 
   LedgerCurrentResponse({
     required this.result,
@@ -14,29 +14,29 @@ class LedgerCurrentResponse implements XrpResponse {
   @override
   factory LedgerCurrentResponse.fromRpcJson(Map<String, dynamic> json) {
     return LedgerCurrentResponse(
-      result: LedgerResultResponse.fromJson(json),
+      result: LedgerCurrentResultResponse.fromJson(json),
     );
   }
 
   @override
   factory LedgerCurrentResponse.fromWebSocketJson(Map<String, dynamic> json) {
     return LedgerCurrentResponse(
-      result: LedgerResultResponse.fromJson(json),
+      result: LedgerCurrentResultResponse.fromJson(json),
       id: json['id'],
     );
   }
 }
 
-class LedgerResultResponse {
+class LedgerCurrentResultResponse {
   /// The Ledger Index of this ledger.
   int ledgerIndex;
 
-  LedgerResultResponse({
+  LedgerCurrentResultResponse({
     required this.ledgerIndex,
   });
 
-  factory LedgerResultResponse.fromJson(Map<String, dynamic> json) {
-    return LedgerResultResponse(
+  factory LedgerCurrentResultResponse.fromJson(Map<String, dynamic> json) {
+    return LedgerCurrentResultResponse(
       ledgerIndex: json['ledger_current_index'],
     );
   }

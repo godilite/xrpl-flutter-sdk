@@ -12,7 +12,8 @@ class LedgerCurrentArgs implements XrpArgs {
   @override
   Map<String, dynamic> toRpcJson() {
     return {
-      'method': PublicApiCommands.ledgerCurrent.value,
+      'method': method.value,
+      "jsonrpc": "2.0",
       'params': [{}]
     };
   }
@@ -21,7 +22,10 @@ class LedgerCurrentArgs implements XrpArgs {
   Map<String, dynamic> toWebSocketJson() {
     return {
       'id': id,
-      'command': PublicApiCommands.ledgerCurrent.value,
+      'command': method.value,
     };
   }
+
+  @override
+  PublicApiCommands get method => PublicApiCommands.ledgerCurrent;
 }

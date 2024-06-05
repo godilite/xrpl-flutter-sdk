@@ -38,26 +38,7 @@ class LedgerDataArgs implements XrpArgs {
 
   @override
   Map<String, dynamic> toRpcJson() {
-    return {
-      'method': PublicApiCommands.ledgerData.value,
-      'params': [
-        {
-          'ledger_hash': ledgerHash,
-          'ledger_index': ledgerIndex,
-          'limit': limit,
-          'binary': binary,
-          'marker': marker,
-          'type': type,
-        }
-      ]
-    };
-  }
-
-  @override
-  Map<String, dynamic> toWebSocketJson() {
-    return {
-      'id': id,
-      'command': PublicApiCommands.ledgerData.value,
+    final data = {
       'ledger_hash': ledgerHash,
       'ledger_index': ledgerIndex,
       'limit': limit,
@@ -65,5 +46,34 @@ class LedgerDataArgs implements XrpArgs {
       'marker': marker,
       'type': type,
     };
+
+    data.removeWhere((key, value) => value == null);
+
+    return {
+      'method': PublicApiCommands.ledgerData.value,
+      "jsonrpc": "2.0",
+      'params': [data]
+    };
   }
+
+  @override
+  Map<String, dynamic> toWebSocketJson() {
+    final data = {
+      'id': id,
+      'command': method.value,
+      'ledger_hash': ledgerHash,
+      'ledger_index': ledgerIndex,
+      'limit': limit,
+      'binary': binary,
+      'marker': marker,
+      'type': type,
+    };
+
+    data.removeWhere((key, value) => value == null);
+
+    return data;
+  }
+
+  @override
+  PublicApiCommands get method => PublicApiCommands.ledgerData;
 }

@@ -1,5 +1,4 @@
-import 'package:xrpl_flutter_sdk/src/client/interfaces/xrp_args.dart';
-import 'package:xrpl_flutter_sdk/src/utils/public_api_commands.dart';
+import 'package:xrpl_flutter_sdk/xrpl_flutter_sdk.dart';
 
 class LedgerArgs implements XrpArgs {
   /// The ledger index of the ledger to use, or a shortcut string to choose a ledger automatically. (See Specifying Ledgers)[https://xrpl.org/docs/references/protocol/data-types/basic-data-types/#specifying-ledgers]
@@ -38,31 +37,40 @@ class LedgerArgs implements XrpArgs {
 
   @override
   Map<String, dynamic> toWebSocketJson() {
-    return {
-      if (ledgerIndex != null) 'ledger_index': ledgerIndex,
-      if (transactions != null) 'transactions': transactions,
-      if (expand != null) 'expand': expand,
-      if (ownerFunds != null) 'owner_funds': ownerFunds,
-      if (binary != null) 'binary': binary,
-      if (queue != null) 'queue': queue,
-      'command': PublicApiCommands.ledger,
+    final data = <String, dynamic>{
+      'command': method.value,
+      'ledger_index': ledgerIndex,
+      'transactions': transactions,
+      'expand': expand,
+      'owner_funds': ownerFunds,
+      'binary': binary,
+      'queue': queue,
+      'id': id,
     };
+    data.removeWhere((key, value) => value == null);
+
+    return data;
   }
 
   @override
   Map<String, dynamic> toRpcJson() {
+    final data = {
+      'ledger_index': ledgerIndex,
+      'transactions': transactions,
+      'expand': expand,
+      'owner_funds': ownerFunds,
+      'binary': binary,
+      'queue': queue,
+    };
+
+    data.removeWhere((key, value) => value == null);
     return {
-      'method': PublicApiCommands.ledger,
-      'params': [
-        {
-          if (ledgerIndex != null) 'ledger_index': ledgerIndex,
-          if (transactions != null) 'transactions': transactions,
-          if (expand != null) 'expand': expand,
-          if (ownerFunds != null) 'owner_funds': ownerFunds,
-          if (binary != null) 'binary': binary,
-          if (queue != null) 'queue': queue,
-        }
-      ],
+      "jsonrpc": "2.0",
+      'method': method.value,
+      'params': [data],
     };
   }
+
+  @override
+  PublicApiCommands get method => PublicApiCommands.ledger;
 }

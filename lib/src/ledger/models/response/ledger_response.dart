@@ -15,7 +15,7 @@ class LedgerResponse implements XrpResponse {
   @override
   factory LedgerResponse.fromWebSocketJson(Map<String, dynamic> json) {
     return LedgerResponse(
-      result: LedgerResultResponse.fromJson(json),
+      result: LedgerResultResponse.fromJson(json['result']),
       id: json['id'],
     );
   }

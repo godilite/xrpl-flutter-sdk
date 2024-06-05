@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:convert';
 
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:xrpl_flutter_sdk/src/client/interfaces/xrp_args.dart';
@@ -12,34 +12,35 @@ class XrpWebSocketClient implements XrpClient {
   late PublicApiCommands _method;
 
   @override
-  void connect(String url) {
-    _channel = WebSocketChannel.connect(Uri.parse(url));
+  void connect(NETWORK network) {
+    _channel = WebSocketChannel.connect(Uri.parse(network.websocketUrl));
   }
 
   Future<void> sendMessage(XrpArgs args) async {
-    final command = args.toWebSocketJson()['command'];
+    final jsonArgs = args.toWebSocketJson();
+    final command = jsonArgs['command'];
+
     _method = PublicApiCommands.fromString(command);
 
-    if (!await _isConnected()) {
-      throw const WebSocketException('WebSocket connection is not established.');
-    }
-
-    _channel.sink.add(args.toWebSocketJson());
+    _channel.sink.add(jsonEncode(jsonArgs));
   }
 
   @override
   Future<void> close() async {
-    if (await _isConnected()) {
+    if (await _isConnected() == true) {
       _channel.sink.close();
     }
   }
 
-  Stream<XrpResponse> get stream => _channel.stream.map((event) {
-        return XrpResponseMapper.instance.fromJson(_method, event);
-      });
+  void onMessage(Function(XrpResponse) callback) {
+    _channel.stream.listen((message) {
+      final response = XrpResponseMapper.instance.fromJson(_method, jsonDecode(message), isWebSocket: true);
+      callback(response);
+    });
+  }
 
   // Method to check if the WebSocket connection is established
-  Future<bool> _isConnected() async {
+  Future<dynamic> _isConnected() async {
     return await _channel.sink.done;
   }
 }

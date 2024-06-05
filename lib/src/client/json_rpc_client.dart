@@ -1,36 +1,50 @@
 import 'dart:async';
+import 'dart:convert';
 
-import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:xrpl_flutter_sdk/src/client/interfaces/xrp_args.dart';
-import 'package:xrpl_flutter_sdk/src/client/interfaces/xrp_response.dart';
+import 'package:http/http.dart' as http;
 import 'package:xrpl_flutter_sdk/src/client/mapper/xrp_response_mapper.dart';
-import 'package:xrpl_flutter_sdk/src/utils/public_api_commands.dart';
+import 'package:xrpl_flutter_sdk/src/utils/error_handling.dart';
+
 import 'package:xrpl_flutter_sdk/xrpl_flutter_sdk.dart';
-import 'package:json_rpc_2/json_rpc_2.dart';
 
 class XrpJsonRpcClient implements XrpClient {
-  late final WebSocketChannel _channel;
-  late final Client _client;
+  late http.Client _client;
+  late NETWORK network;
 
   @override
-  void connect(String url) {
-    _channel = WebSocketChannel.connect(Uri.parse(url));
-    _client = Client(_channel.cast<String>());
-    unawaited(_client.listen());
+  XrpJsonRpcClient connect(NETWORK network) {
+    _client = http.Client();
+    this.network = network;
+    return this;
   }
 
   Future<XrpResponse> sendRequest(XrpArgs args) async {
     final jsonArgs = args.toRpcJson();
-    final params = jsonArgs['params'];
-    final method = jsonArgs['method'] as PublicApiCommands;
-    final response = await _client.sendRequest(method.value, params);
-    final mapper = XrpResponseMapper.instance;
+    final method = PublicApiCommands.fromString(jsonArgs['method'] as String);
+    final response = await _sendRequest(method.value, jsonArgs);
+    if (response.containsKey('error')) {
+      handleUniversalError(response['error']);
+    }
 
-    return mapper.fromJson(method, response);
+    final xprData = XrpResponseMapper.instance.fromJson(method, response);
+
+    return xprData;
   }
 
   @override
   void close() {
     _client.close();
+  }
+
+  Future<Map<String, dynamic>> _sendRequest(String method, Map<String, dynamic> params) async {
+    final response = await _client
+        .post(Uri.parse(network.rpcUrl),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: json.encode(params))
+        .timeout(const Duration(seconds: 30));
+
+    return json.decode(response.body) as Map<String, dynamic>;
   }
 }

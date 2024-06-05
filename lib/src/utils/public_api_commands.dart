@@ -9,4 +9,6 @@ enum PublicApiCommands {
   const PublicApiCommands(this.value);
 
   static PublicApiCommands fromString(String value) => values.firstWhere((e) => e.value == value);
+
+  Map<String, dynamic> toJson() => {'value': value};
 }

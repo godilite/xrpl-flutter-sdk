@@ -8,7 +8,8 @@ class LedgerClosedArgs implements XrpArgs {
   @override
   Map<String, dynamic> toRpcJson() {
     return {
-      'method': PublicApiCommands.ledgerClosed.value,
+      'method': method.value,
+      "jsonrpc": "2.0",
       'params': [{}]
     };
   }
@@ -17,7 +18,10 @@ class LedgerClosedArgs implements XrpArgs {
   Map<String, dynamic> toWebSocketJson() {
     return {
       'id': id,
-      'command': PublicApiCommands.ledgerClosed.value,
+      'command': method.value,
     };
   }
+
+  @override
+  PublicApiCommands get method => throw UnimplementedError();
 }
