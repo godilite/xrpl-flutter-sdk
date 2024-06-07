@@ -1,6 +1,6 @@
 import 'package:xrpl_flutter_sdk/xrpl_flutter_sdk.dart';
 
-class LedgerArgs implements XrpArgs {
+class LedgerCommand implements XrpCommand {
   /// The ledger index of the ledger to use, or a shortcut string to choose a ledger automatically. (See Specifying Ledgers)[https://xrpl.org/docs/references/protocol/data-types/basic-data-types/#specifying-ledgers]
   String? ledgerIndex;
 
@@ -25,7 +25,7 @@ class LedgerArgs implements XrpArgs {
   /// (Optional) Used for [WebsocketClient] A unique value to identify this request. The response to this request uses the same id field. This way, even if responses arrive out of order, you know which request prompted which response.
   dynamic id;
 
-  LedgerArgs({
+  LedgerCommand({
     this.ledgerIndex,
     this.transactions,
     this.expand,

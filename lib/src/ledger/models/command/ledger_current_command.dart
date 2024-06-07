@@ -1,11 +1,11 @@
-import 'package:xrpl_flutter_sdk/src/client/interfaces/xrp_args.dart';
+import 'package:xrpl_flutter_sdk/src/client/interfaces/xrp_command.dart';
 import 'package:xrpl_flutter_sdk/src/utils/public_api_commands.dart';
 
-class LedgerCurrentArgs implements XrpArgs {
+class LedgerCurrentCommand implements XrpCommand {
   /// (Optional) Used for [WebsocketClient] A unique value to identify this request. The response to this request uses the same id field. This way, even if responses arrive out of order, you know which request prompted which response.
   dynamic id;
 
-  LedgerCurrentArgs({
+  LedgerCurrentCommand({
     this.id,
   });
 

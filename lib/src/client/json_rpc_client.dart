@@ -18,8 +18,8 @@ class XrpJsonRpcClient implements XrpClient {
     return this;
   }
 
-  Future<XrpResponse> sendRequest(XrpArgs args) async {
-    final jsonArgs = args.toRpcJson();
+  Future<XrpResponse> sendRequest(XrpCommand command) async {
+    final jsonArgs = command.toRpcJson();
     final method = PublicApiCommands.fromString(jsonArgs['method'] as String);
     final response = await _sendRequest(method.value, jsonArgs);
     if (response.containsKey('error')) {

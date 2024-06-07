@@ -1,9 +1,4 @@
-import 'package:xrpl_flutter_sdk/src/client/interfaces/xrp_response.dart';
-import 'package:xrpl_flutter_sdk/src/ledger/models/response/ledger_closed_response.dart';
-import 'package:xrpl_flutter_sdk/src/ledger/models/response/ledger_current_response.dart';
-import 'package:xrpl_flutter_sdk/src/ledger/models/response/ledger_data_response.dart';
-import 'package:xrpl_flutter_sdk/src/ledger/models/response/ledger_response.dart';
-import 'package:xrpl_flutter_sdk/src/utils/public_api_commands.dart';
+import 'package:xrpl_flutter_sdk/xrpl_flutter_sdk.dart';
 
 class XrpResponseMapper {
   XrpResponseMapper._();
@@ -24,6 +19,12 @@ class XrpResponseMapper {
         return isWebSocket ? LedgerCurrentResponse.fromWebSocketJson(json) : LedgerCurrentResponse.fromRpcJson(json);
       case PublicApiCommands.ledgerData:
         return isWebSocket ? LedgerDataResponse.fromWebSocketJson(json) : LedgerDataResponse.fromRpcJson(json);
+      case PublicApiCommands.accountChannels:
+        return isWebSocket ? AccountChannelResponse.fromWebSocketJson(json) : AccountChannelResponse.fromRpcJson(json);
+      case PublicApiCommands.accountCurrencies:
+        return isWebSocket
+            ? AccountCurrenciesResponse.fromWebSocketJson(json)
+            : AccountCurrenciesResponse.fromRpcJson(json);
     }
   }
 }

@@ -1,8 +1,8 @@
-import 'package:xrpl_flutter_sdk/src/client/interfaces/xrp_args.dart';
+import 'package:xrpl_flutter_sdk/src/client/interfaces/xrp_command.dart';
 import 'package:xrpl_flutter_sdk/src/ledger/models/enums/ledger_type.dart';
 import 'package:xrpl_flutter_sdk/src/utils/public_api_commands.dart';
 
-class LedgerDataArgs implements XrpArgs {
+class LedgerDataCommand implements XrpCommand {
   /// (Optional) Used for [WebsocketClient] A unique value to identify this request. The response to this request uses the same id field. This way, even if responses arrive out of order, you know which request prompted which response.
   dynamic id;
 
@@ -26,7 +26,7 @@ class LedgerDataArgs implements XrpArgs {
   /// Filter results to a specific type of ledger entry. The valid types are: account, amendments, amm, check, deposit_preauth, directory, escrow, fee, hashes, nft_offer, offer, payment_channel, signer_list, state (trust line), and ticket.
   LedgerType? type;
 
-  LedgerDataArgs({
+  LedgerDataCommand({
     this.id,
     this.ledgerHash,
     this.ledgerIndex,

@@ -62,8 +62,14 @@
       "languageVersion": "3.3"
     },
     {
-      "name": "json_rpc_2",
-      "rootUri": "file:///Users/godwin/.pub-cache/hosted/pub.dev/json_rpc_2-3.0.2",
+      "name": "http",
+      "rootUri": "file:///Users/godwin/.pub-cache/hosted/pub.dev/http-1.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "http_parser",
+      "rootUri": "file:///Users/godwin/.pub-cache/hosted/pub.dev/http_parser-4.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -200,7 +206,7 @@
       "languageVersion": "3.4"
     }
   ],
-  "generated": "2024-06-04T05:41:44.529454Z",
+  "generated": "2024-06-05T05:15:40.168238Z",
   "generator": "pub",
   "generatorVersion": "3.4.0",
   "flutterRoot": "file:///Users/godwin/development/flutter",

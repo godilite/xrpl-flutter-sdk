@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:xrpl_flutter_sdk/src/client/interfaces/xrp_args.dart';
+import 'package:xrpl_flutter_sdk/src/client/interfaces/xrp_command.dart';
 import 'package:xrpl_flutter_sdk/src/client/interfaces/xrp_client.dart';
 import 'package:xrpl_flutter_sdk/src/client/interfaces/xrp_response.dart';
 import 'package:xrpl_flutter_sdk/src/client/mapper/xrp_response_mapper.dart';
@@ -16,11 +16,11 @@ class XrpWebSocketClient implements XrpClient {
     _channel = WebSocketChannel.connect(Uri.parse(network.websocketUrl));
   }
 
-  Future<void> sendMessage(XrpArgs args) async {
-    final jsonArgs = args.toWebSocketJson();
-    final command = jsonArgs['command'];
+  Future<void> sendMessage(XrpCommand command) async {
+    final jsonArgs = command.toWebSocketJson();
+    final c = jsonArgs['command'];
 
-    _method = PublicApiCommands.fromString(command);
+    _method = PublicApiCommands.fromString(c);
 
     _channel.sink.add(jsonEncode(jsonArgs));
   }
