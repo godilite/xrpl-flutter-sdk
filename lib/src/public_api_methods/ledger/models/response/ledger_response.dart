@@ -1,4 +1,5 @@
 import 'package:xrpl_flutter_sdk/src/client/interfaces/xrp_response.dart';
+import 'package:xrpl_flutter_sdk/src/public_api_methods/models/transaction.dart';
 
 class LedgerResponse implements XrpResponse {
   /// id of the request that prompted this response (only for websocket requests)
@@ -42,7 +43,7 @@ class LedgerResultResponse {
   bool validated;
 
   /// (Omitted unless requested with the queue parameter) Array of objects describing queued transactions, in the same order as the queue. If the request specified expand as true, members contain full representations of the transactions, in either JSON or binary depending on whether the request specified binary as true.
-  QueueData? queueData;
+  List<Transaction>? queueData;
 
   LedgerResultResponse({
     required this.ledger,
@@ -58,6 +59,9 @@ class LedgerResultResponse {
       ledgerHash: json['ledger_hash'],
       ledgerIndex: json['ledger_index'],
       validated: json['validated'],
+      queueData: json['queue_data'] != null
+          ? (json['queue_data'] as List<dynamic>).map((e) => Transaction.fromJson(e)).toList()
+          : null,
     );
   }
 }

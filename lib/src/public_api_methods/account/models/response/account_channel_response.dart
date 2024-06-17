@@ -2,11 +2,11 @@ import 'package:xrpl_flutter_sdk/src/client/interfaces/xrp_response.dart';
 
 class AccountChannelResponse implements XrpResponse {
   /// id of the request that prompted this response (only for websocket requests)
-  dynamic id;
+  final dynamic id;
 
-  AccountChannelResultResponse result;
+  final AccountChannelResultResponse result;
 
-  AccountChannelResponse({
+  const AccountChannelResponse({
     required this.result,
     this.id,
   });
@@ -49,7 +49,7 @@ class AccountChannelResultResponse {
 // (May be omitted) Server-defined value for pagination. Pass this to the next call to resume getting results where this call left off. Omitted when there are no additional pages after this one.
   final dynamic marker;
 
-  AccountChannelResultResponse({
+  const AccountChannelResultResponse({
     required this.ledgerHash,
     required this.ledgerIndex,
     required this.account,
@@ -109,7 +109,7 @@ class Channel {
   ///	Unsigned Integer	(May be omitted) A 32-bit unsigned integer to use as a destination tag for payments through this channel, if one was specified at channel creation. This indicates the payment channel's beneficiary or other purpose at the destination account.
   final int? destinationTag;
 
-  Channel({
+  const Channel({
     required this.account,
     required this.amount,
     required this.balance,

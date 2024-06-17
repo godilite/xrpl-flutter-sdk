@@ -1,5 +1,5 @@
 import 'package:xrpl_flutter_sdk/src/client/interfaces/xrp_command.dart';
-import 'package:xrpl_flutter_sdk/src/ledger/models/enums/ledger_type.dart';
+import 'package:xrpl_flutter_sdk/src/public_api_methods/ledger/models/enums/ledger_type.dart';
 import 'package:xrpl_flutter_sdk/src/utils/public_api_commands.dart';
 
 class LedgerDataCommand implements XrpCommand {

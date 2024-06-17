@@ -12,7 +12,7 @@ class AccountCurrenciesCommand implements XrpCommand {
   /// Can be Number or String	The ledger index of the ledger to use, or a shortcut string to choose a ledger automatically. (See Specifying Ledgers)
   final dynamic ledgerIndex;
 
-  AccountCurrenciesCommand({
+  const AccountCurrenciesCommand({
     required this.account,
     this.ledgerHash,
     this.ledgerIndex,
@@ -29,7 +29,7 @@ class AccountCurrenciesCommand implements XrpCommand {
     data.removeWhere((key, value) => value == null);
 
     return {
-      'method': PublicApiCommands.accountCurrencies.value,
+      'method': method.value,
       "jsonrpc": "2.0",
       'params': [data]
     };

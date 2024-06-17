@@ -1,5 +1,4 @@
-import 'package:xrpl_flutter_sdk/src/ledger/exceptions/ledger_exceptions.dart';
-import 'package:xrpl_flutter_sdk/src/universal_exceptions/universal_exceptions.dart';
+import 'package:xrpl_flutter_sdk/src/exceptions/xrp_exceptions.dart';
 
 void handleUniversalError(String errorCode) {
   switch (errorCode) {

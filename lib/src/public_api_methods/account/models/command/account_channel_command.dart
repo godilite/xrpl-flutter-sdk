@@ -23,7 +23,7 @@ class AccountChannelCommand implements XrpCommand {
   ///	Value from a previous paginated response. Resume retrieving data where that response left off.
   final dynamic marker;
 
-  AccountChannelCommand({
+  const AccountChannelCommand({
     required this.account,
     this.destinationAccount,
     this.ledgerHash,
@@ -46,7 +46,7 @@ class AccountChannelCommand implements XrpCommand {
     data.removeWhere((key, value) => value == null);
 
     return {
-      'method': PublicApiCommands.accountChannels.value,
+      'method': method.value,
       "jsonrpc": "2.0",
       'params': [data]
     };
@@ -61,6 +61,7 @@ class AccountChannelCommand implements XrpCommand {
       'ledger_index': ledgerIndex,
       'limit': limit,
       'marker': marker,
+      "command": method.value,
     };
 
     data.removeWhere((key, value) => value == null);

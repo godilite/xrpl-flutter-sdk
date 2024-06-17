@@ -25,6 +25,8 @@ class XrpResponseMapper {
         return isWebSocket
             ? AccountCurrenciesResponse.fromWebSocketJson(json)
             : AccountCurrenciesResponse.fromRpcJson(json);
+      default:
+        throw Exception('Unknown method: $method');
     }
   }
 }
